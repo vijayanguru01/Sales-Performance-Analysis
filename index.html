@@ -1,185 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Sales Performance Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f4f6f9;
-    }
-    header {
-      background-color: #0073e6;
-      color: white;
-      padding: 2px;
-      text-align: center;
-    }
-    nav {
-      background: #005bb5;
-      padding: 5px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 10px;
-    }
-    .card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin: 20px;
-      padding: 20px;
-      flex: 1 1 400px;
-      max-width: 600px;
-    }
-    h2 {
-      color: #333;
-      margin-bottom: 15px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    table, th, td {
-      border: 1px solid #ddd;
-    }
-    th, td {
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #0073e6;
-      color: white;
-    }
-    footer {
-      background: #0073e6;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 30px;
-    }
-  </style>
+    <title>Sales Dashboard</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+    <py-config>
+        packages = ["pandas", "matplotlib", "seaborn"]
+    </py-config>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            margin: 15px auto;
+            width: 90%;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
+
 <body>
-  <header>
-    <h1>Sales Performance Dashboard</h1>
-    <p>Track targets, achievements, and growth trends</p>
-  </header>
 
-  <nav>
-    <a href="#">Overview</a>
-    <a href="#">Monthly Analysis</a>
-    <a href="#">Regional Performance</a>
-    <a href="#">Product Trends</a>
-  </nav>
+<h1>📊 Sales Performance Dashboard</h1>
 
-  <div class="container">
-    <!-- Summary Card -->
-    <div class="card">
-      <h2>Summary</h2>
-      <p><strong>Total Target:</strong> Rs 230,000</p>
-      <p><strong>Total Sales:</strong> Rs 236,000</p>
-      <p><strong>Overall Performance:</strong> 103%</p>
-    </div>
+<div class="card">
+    <h3>Data Table</h3>
+    <div id="table"></div>
+</div>
 
-    <!-- Table Card -->
-    <div class="card">
-      <h2>Monthly Sales Data</h2>
-      <table>
-        <tr>
-          <th>Month</th>
-          <th>Target (Rs)</th>
-          <th>Actual (Rs)</th>
-          <th>Performance (%)</th>
-        </tr>
-        <tr><td>January</td><td>50,000</td><td>48,000</td><td>96%</td></tr>
-        <tr><td>February</td><td>55,000</td><td>60,000</td><td>109%</td></tr>
-        <tr><td>March</td><td>60,000</td><td>58,000</td><td>97%</td></tr>
-        <tr><td>April</td><td>65,000</td><td>70,000</td><td>108%</td></tr>
-      </table>
-    </div>
+<div class="card">
+    <h3>Summary</h3>
+    <div id="summary"></div>
+</div>
 
-    <!-- Chart Card -->
-    <div class="card">
-      <h2>Target vs Actual Sales</h2>
-      <canvas id="salesChart"></canvas>
-    </div>
+<div class="card">
+    <h3>Bar Chart</h3>
+    <div id="bar"></div>
+</div>
 
-    <!-- Line Chart Card -->
-    <div class="card">
-      <h2>Performance Trend</h2>
-      <canvas id="trendChart"></canvas>
-    </div>
-  </div>
+<div class="card">
+    <h3>Performance Trend</h3>
+    <div id="line"></div>
+</div>
 
-  <footer>
-    <p>2026 Sales Analytics Inc. | Powered by VijayanGuru</p>
-  </footer>
+<div class="card">
+    <h3>Pie Chart (Contribution)</h3>
+    <div id="pie"></div>
+</div>
 
-  <script>
-    // Bar Chart: Target vs Actual
-    const ctx1 = document.getElementById('salesChart').getContext('2d');
-    new Chart(ctx1, {
-      type: 'bar',
-      data: {
-        labels: ['January', 'February', 'March', 'April'],
-        datasets: [
-          {
-            label: 'Target',
-            data: [50000, 55000, 60000, 65000],
-            backgroundColor: 'rgba(0, 115, 230, 0.6)'
-          },
-          {
-            label: 'Actual',
-            data: [48000, 60000, 58000, 70000],
-            backgroundColor: 'rgba(0, 200, 100, 0.6)'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: { display: true, text: 'Monthly Sales Comparison' }
-        }
-      }
-    });
+<div class="card">
+    <h3>Growth Chart</h3>
+    <div id="growth"></div>
+</div>
 
-    // Line Chart: Performance Trend
-    const ctx2 = document.getElementById('trendChart').getContext('2d');
-    new Chart(ctx2, {
-      type: 'line',
-      data: {
-        labels: ['January', 'February', 'March', 'April'],
-        datasets: [{
-          label: 'Performance (%)',
-          data: [96, 109, 97, 108],
-          borderColor: 'rgba(255, 99, 132, 1)',
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          fill: true,
-          tension: 0.3
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: { display: true, text: 'Performance Trend Over Months' }
-        },
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
-    });
-  </script>
+<py-script>
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pyscript import display
+
+# -------- Data --------
+data = {
+    'Month': ['January', 'February', 'March', 'April'],
+    'TargetSales': [50000, 55000, 60000, 65000],
+    'ActualSales': [48000, 60000, 58000, 70000]
+}
+
+df = pd.DataFrame(data)
+
+# -------- Calculations --------
+df['Performance'] = (df['ActualSales'] / df['TargetSales']) * 100
+df['Growth'] = df['ActualSales'].pct_change() * 100
+
+# -------- Display Table --------
+display(df, target="table")
+
+# -------- Summary --------
+overall = (df['ActualSales'].sum() / df['TargetSales'].sum()) * 100
+best_month = df.loc[df['ActualSales'].idxmax()]['Month']
+
+display(f"Overall Performance: {round(overall,2)}%", target="summary")
+display(f"Best Month: {best_month}", target="summary")
+
+# -------- Bar Chart --------
+fig1, ax1 = plt.subplots()
+df.plot(x='Month', y=['TargetSales','ActualSales'], kind='bar', ax=ax1)
+ax1.set_title("Target vs Actual Sales")
+display(fig1, target="bar")
+
+# -------- Line Chart --------
+fig2, ax2 = plt.subplots()
+sns.lineplot(x='Month', y='Performance', data=df, marker='o', ax=ax2)
+ax2.set_title("Performance (%)")
+display(fig2, target="line")
+
+# -------- Pie Chart --------
+fig3, ax3 = plt.subplots()
+ax3.pie(df['ActualSales'], labels=df['Month'], autopct='%1.1f%%')
+ax3.set_title("Sales Contribution")
+display(fig3, target="pie")
+
+# -------- Growth Chart --------
+fig4, ax4 = plt.subplots()
+sns.barplot(x='Month', y='Growth', data=df, ax=ax4)
+ax4.set_title("Month-to-Month Growth (%)")
+display(fig4, target="growth")
+
+</py-script>
+
 </body>
 </html>
